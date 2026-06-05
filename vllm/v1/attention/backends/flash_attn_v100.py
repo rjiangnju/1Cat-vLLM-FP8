@@ -969,4 +969,4 @@ class FlashAttnV100Backend(TritonAttentionBackend):
     @staticmethod
     def get_supported_head_sizes() -> list[int]:
         # Keep this aligned with the dense prefill kernel dispatch table.
-        return [64, 128, 256]
+        return [64, 80, 96, 112, 128, 192, 256]

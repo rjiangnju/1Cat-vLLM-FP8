@@ -202,6 +202,9 @@ class RMSNorm(CustomOp):
         if self.variance_size_override is not None:
             return self.forward_native(x, residual)
 
+        if x.dtype not in (torch.float16, torch.bfloat16):
+            return self.forward_native(x, residual)
+
         add_residual = residual is not None
         if add_residual:
             return fused_add_rms_norm(
