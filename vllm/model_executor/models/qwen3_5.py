@@ -708,6 +708,11 @@ class Qwen3_5Model(Qwen3NextModel):
                 hidden_states=hidden_states,
                 residual=residual,
             )
+            if residual is not None and residual.dtype in (
+                torch.float16, torch.bfloat16,
+            ):
+                finfo = torch.finfo(residual.dtype)
+                residual = torch.clamp(residual, min=finfo.min, max=finfo.max)
             self._maybe_add_hidden_state(
                 aux_hidden_states, layer_idx + 1, hidden_states, residual
             )
